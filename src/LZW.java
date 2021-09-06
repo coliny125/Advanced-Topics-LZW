@@ -62,11 +62,6 @@ public class LZW {
 	{
 		File f = new File ("/Users/Alex/Desktop/Advanced-Topics-CS/LZW/lzw-file1.txt");
 		LZW l = new LZW(f);
-		//HashMap<String,Integer> test = l.getMap();
-		/*for (int i = 0; i < 256; i++)
-		{
-			System.out.println (""+(char)i + ", " + test.get("" + (char)i)); 
-		}*/
 		l.compress();
 		
 	}
