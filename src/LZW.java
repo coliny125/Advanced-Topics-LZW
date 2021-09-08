@@ -26,7 +26,7 @@ public class LZW {
 		try 
 		{
 			BufferedReader br = new BufferedReader (new FileReader(orginalFile));
-			BufferedWriter fileWriter = new BufferedWriter(new FileWriter("/Users/Alex/Desktop/Advanced-Topics-CS/LZW/compressedFile.txt"));
+			FileOutputStream fileWriter = new FileOutputStream("/Users/Alex/Desktop/Advanced-Topics-CS/LZW/testResult.bin");
 			String current = ""+ (char)br.read();
 			br.mark(100);
 			while (br.read() != -1)
@@ -39,16 +39,20 @@ public class LZW {
 				}
 				else
 				{
-					fileWriter.write(dict.get(current) + " ");
-					System.out.println (current);
+					byte[] currentByte = current.getBytes();
+					fileWriter.write(currentByte);
+					//fileWriter.write(dict.get(current) + " ");
+					//System.out.println (current);
 					dict.put (current+next,dictLength);//not dictLength+1 because dictLength is always one value greater than dictionary index.
 					current = next;
 					dictLength++;
 				}
 				br.mark(100);
 			}
+			byte[] lastByte = current.getBytes();
 			System.out.println (dict.get(current));
-			fileWriter.write(""+dict.get(current));
+			fileWriter.write(lastByte);
+			//fileWriter.write(""+dict.get(current));
 			fileWriter.close();
 			br.close();
 			System.out.println ("File successfully compressed");
@@ -60,7 +64,7 @@ public class LZW {
 	
 	public static void main (String [] args) throws IOException
 	{
-		File f = new File ("/Users/Alex/Desktop/Advanced-Topics-CS/LZW/lzw-file1.txt");
+		File f = new File ("/Users/Alex/Desktop/Advanced-Topics-CS/LZW/test.txt");
 		LZW l = new LZW(f);
 		l.compress();
 		
