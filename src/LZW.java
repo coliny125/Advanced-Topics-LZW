@@ -41,7 +41,7 @@ public class LZW {
 				{
 					fileWriter.write(dict.get(current) + " ");
 					System.out.println (current);
-					dict.put (current+next,dictLength+1);
+					dict.put (current+next,dictLength);//not dictLength+1 because dictLength is always one value greater than dictionary index.
 					current = next;
 					dictLength++;
 				}
