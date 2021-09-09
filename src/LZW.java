@@ -18,7 +18,7 @@ public class LZW {
 	/** Mask for bit 7 of a byte. */
 	private static final int BIT_7 = 0x80;
 	private static final int[] BITS = { BIT_0, BIT_1, BIT_2, BIT_3, BIT_4, BIT_5, BIT_6, BIT_7 };
-	private HashMap <String, Integer> dict;
+	private HashMap <String, Integer> dict;//dict has no max bound. No set byte length;
 	private File orginalFile;
 	private int dictLength;
 	public LZW (File original)
