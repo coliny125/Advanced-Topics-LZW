@@ -20,7 +20,7 @@ public class LZW {
 	private static final int BIT_7 = 0x80;
 	private static final int[] BITS = { BIT_0, BIT_1, BIT_2, BIT_3, BIT_4, BIT_5, BIT_6, BIT_7 };
 	
-	private HashMap <String, Integer> dict;//dictionary. Has no max bound and no set byte length;
+	private HashMap <String, Integer> dict;//dictionary to store ascii characters. Has no max bound and no set byte length;
 	private File orginalFile;//input file that user wants to read in and compress
 	private int dictLength;//length of dictionary
 	
@@ -71,11 +71,12 @@ public class LZW {
 				}
 				br.mark(100);
 			}
+			
 			//these next two lines are neccessary to capture the bits of the last character of the file.
 			asciiVal = dict.get(current);
 			binaryString += LZW.toBinary(asciiVal, 8);
 			
-			//initalizes charArray needed for fromAscii method
+			//initializes charArray needed for fromAscii method
 			char[] encodedChars = binaryString.toCharArray();
 			//see fromAscii method. Resulting byte[] can be used to write to .bin file
 			byte[] encodedBytes = LZW.fromAscii(encodedChars);

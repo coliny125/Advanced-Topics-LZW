@@ -1,0 +1,1 @@
+The compression works for all files. Writes a binary file. There is no set byte size and my dictionary has no max size. You're welcome for working code :)
