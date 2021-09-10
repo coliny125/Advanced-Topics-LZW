@@ -124,7 +124,7 @@ public class LZW {
 	
 	public static void main (String [] args) throws IOException
 	{
-		File f = new File ("/Users/Alex/Desktop/Advanced-Topics-CS/LZW/lzw-file3.txt");
+		File f = new File ("/Users/Alex/Desktop/Advanced-Topics-CS/LZW/lzw-file1.txt");
 		LZW l = new LZW(f);
 		l.compress();
 		
