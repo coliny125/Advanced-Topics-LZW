@@ -1,6 +1,7 @@
 import java.util.*;
 import java.io.*;
 public class LZW {
+	//All static variables used for fromAscii method, which was taken from http://www.java2s.com/Tutorial/Java/0180__File/Translatesbetweenbytearraysandstringsof0sand1s.htm
 	private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
 	private static final int BIT_0 = 1;
 	/** Mask for bit 1 of a byte. */
@@ -18,9 +19,12 @@ public class LZW {
 	/** Mask for bit 7 of a byte. */
 	private static final int BIT_7 = 0x80;
 	private static final int[] BITS = { BIT_0, BIT_1, BIT_2, BIT_3, BIT_4, BIT_5, BIT_6, BIT_7 };
-	private HashMap <String, Integer> dict;//dict has no max bound. No set byte length;
-	private File orginalFile;
-	private int dictLength;
+	
+	private HashMap <String, Integer> dict;//dictionary. Has no max bound and no set byte length;
+	private File orginalFile;//input file that user wants to read in and compress
+	private int dictLength;//length of dictionary
+	
+	//constructor takes in a file to be compressed and intializes the dictionary of ascii characters.
 	public LZW (File original)
 	{
 		orginalFile = original;
@@ -31,23 +35,25 @@ public class LZW {
 			dict.put("" + (char)k, k);
 		}
 	}
-	
-	public HashMap<String,Integer> getMap ()
-	{
-		return dict;
-	}
+
 	
 	public void compress () throws IOException
 	{
 		try 
 		{
+			//This reader is used to read input file
 			BufferedReader br = new BufferedReader (new FileReader(orginalFile));
+			//This stream is used to write to binary file
 			FileOutputStream fileWriter = new FileOutputStream("/Users/Alex/Desktop/Advanced-Topics-CS/LZW/compressedFile.bin");
+			//current tracks the current character or string being checked in the algorithm
 			String current = ""+ (char)br.read();
+			//asciiVal is used to store the ascii value of the variable "current"
 			int asciiVal;
+			//binaryString is a concatentation of all the different asciiVal values in the while loop. The string contains only 1's and 0's
 			String binaryString = "";
+			//the mark() and reset() methods are used to make sure no characters are skipped in the buffered stream. This all works so no need to worry about it.
 			br.mark(100);
-			while (br.read() != -1)
+			while (br.read() != -1)//checks that the input file still has things to read
 			{
 				br.reset();
 				String next = "" + (char)br.read();
@@ -58,16 +64,20 @@ public class LZW {
 				else
 				{
 					asciiVal = dict.get(current);
-					binaryString += LZW.toBinary(asciiVal, 8);
+					binaryString += LZW.toBinary(asciiVal, 8);//toBinary(int number, int length) number is turned into a string of 1's and 0's. length is length of binary string made by this method
 					dict.put (current+next,dictLength);//not dictLength+1 because dictLength is always one value greater than dictionary index.
 					current = next;
 					dictLength++;
 				}
 				br.mark(100);
 			}
+			//these next two lines are neccessary to capture the bits of the last character of the file.
 			asciiVal = dict.get(current);
 			binaryString += LZW.toBinary(asciiVal, 8);
+			
+			//initalizes charArray needed for fromAscii method
 			char[] encodedChars = binaryString.toCharArray();
+			//see fromAscii method. Resulting byte[] can be used to write to .bin file
 			byte[] encodedBytes = LZW.fromAscii(encodedChars);
 			fileWriter.write(encodedBytes);
 			fileWriter.close();
@@ -79,6 +89,7 @@ public class LZW {
 		}
 	}
 	
+	//method also taken from internet.
 	public static String toBinary(int x, int len)
     {
         if (len > 0)
@@ -90,7 +101,7 @@ public class LZW {
         return null;
     }
 	
-	//method below taken from internet;
+	//method taken from http://www.java2s.com/Tutorial/Java/0180__File/Translatesbetweenbytearraysandstringsof0sand1s.htm
 	public static byte[] fromAscii(char[] ascii) {
 	    if (ascii == null || ascii.length == 0) {
 	      return EMPTY_BYTE_ARRAY;
