@@ -123,9 +123,30 @@ public class LZW {
 	    return l_raw;
 	  }
 	
+	public static void decompress (byte[] encodedBinary)
+	{
+		
+		//convert binary file to string
+		//For every 9 bits, add its correspending decimal to an array
+		//build dictionary using array of ints
+		//use decimal array and dictionary to build string
+		
+	}
+	
+	//takes in byte array and returns String of 0's and 1's.
+	public static String toString()
+	{
+		InputStream binaryStream = new FileInputStream("/Users/ava/eclipse-workspace/Alex's LZW/Advanced-Topics-LZW-main/Advanced-Topics-LZW/compressedFile.bin");
+		
+		if (encodedBinary.length == 0)
+			return EMPTY_BYTE_ARRAY;
+		
+		
+	}
+	
 	public static void main (String [] args) throws IOException
 	{
-		File f = new File ("/Users/Alex/Desktop/Advanced-Topics-CS/LZW/lzw-file1.txt");
+		File f = new File ("/Users/ava/eclipse-workspace/Alex's LZW/Advanced-Topics-LZW-main/Advanced-Topics-LZW/lzw-file1.txt");
 		LZW l = new LZW(f);
 		l.compress();
 		
