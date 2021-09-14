@@ -123,24 +123,31 @@ public class LZW {
 	    return l_raw;
 	  }
 	
-	public static void decompress (byte[] encodedBinary)
+	public static void decompress () throws IOException
 	{
-		
 		//convert binary file to string
 		//For every 9 bits, add its correspending decimal to an array
 		//build dictionary using array of ints
 		//use decimal array and dictionary to build string
-		
 	}
 	
-	//takes in byte array and returns String of 0's and 1's.
+	//takes in binary file and returns String of 0's and 1's.
 	public static String toString()
 	{
-		InputStream binaryStream = new FileInputStream("/Users/ava/eclipse-workspace/Alex's LZW/Advanced-Topics-LZW-main/Advanced-Topics-LZW/compressedFile.bin");
-		
-		if (encodedBinary.length == 0)
-			return EMPTY_BYTE_ARRAY;
-		
+		String binaryString = "";
+		try (
+				InputStream binaryStream = new FileInputStream("/Users/ava/eclipse-workspace/Alex's LZW/Advanced-Topics-LZW-main/Advanced-Topics-LZW/compressedFile.bin");				
+	        ) {
+	 
+	            int byteRead;
+	 
+	            while ((byteRead = binaryStream.read()) != -1) {
+	                binaryString+=(byteRead);
+	            }
+	 
+	        } catch (IOException ex) {
+	        	return EMPTY_BYTE_ARRAY;
+	        }
 		
 	}
 	
