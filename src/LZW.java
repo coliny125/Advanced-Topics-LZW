@@ -123,26 +123,40 @@ public class LZW {
 	    return l_raw;
 	  }
 	
+	private static final int BUFFER_SIZE = 8;
+	private static String binaryString = "";
+	public static int[] decimalArray;
+
+	
 	public static void decompress () throws IOException
 	{
-		//convert binary file to string
-		//For every 9 bits, add its correspending decimal to an array
+		//Xconvert binary file to string
+		
+		//XFor every 9 bits, add its corresponding decimal to an array
+		
 		//build dictionary using array of ints
+		
 		//use decimal array and dictionary to build string
+		//digit = parseInt(binary, 2)
 	}
 	
 	//takes in binary file and returns String of 0's and 1's.
+	//taken from https://www.codejava.net/java-se/file-io/how-to-read-and-write-binary-files-in-java
+	
 	public static String toString()
 	{
-		String binaryString = "";
+		
 		try (
 				InputStream binaryStream = new FileInputStream("/Users/ava/eclipse-workspace/Alex's LZW/Advanced-Topics-LZW-main/Advanced-Topics-LZW/compressedFile.bin");				
 	        ) {
 	 
-	            int byteRead;
+	            
+	            byte[] buffer = new byte[BUFFER_SIZE];
 	 
-	            while ((byteRead = binaryStream.read()) != -1) {
-	                binaryString+=(byteRead);
+	            while (binaryStream.read(buffer) != -1) {
+	                binaryString.write(buffer);
+	                
+	            return binaryString;//
 	            }
 	 
 	        } catch (IOException ex) {
@@ -150,6 +164,23 @@ public class LZW {
 	        }
 		
 	}
+	
+	public static int [] makeDecimalArray ()
+	{
+		decimalArray = new int [binaryString.length()/9];
+		
+		for (int i = 0; i < binaryString.length()-9; i+=9)
+		{
+			String binSubString = binaryString.substring(i, i+9)
+			decimalArray[i/9] = Integer.parseInt(binSubString,2);
+		}
+		
+		return decimalArray[];
+	}
+	
+	public static HashMap buildDictionary()
+	
+	
 	
 	public static void main (String [] args) throws IOException
 	{
