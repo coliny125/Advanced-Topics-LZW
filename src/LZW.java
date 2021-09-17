@@ -131,23 +131,21 @@ public class LZW {
 	
 	public static void decompress () throws IOException
 	{
-		//Xconvert binary file to string
+		toString();
+		makeDecimalArray();
+		buildDictionary();
 		
-		//XFor every 9 bits, add its corresponding decimal to an array
-		
-		//build dictionary using all ascii vals
-		
-		//add to dict using array of ints
-		
-		//use decimal array and dictionary to build string
+		//writing decodedString to .txt file
+		try (PrintWriter out = new PrintWriter("decompressedFile.txt")) {
+		    out.println(text);
+		}
 	}
 	
 	//takes in binary file and returns String of 0's and 1's.
 	//taken from https://www.codejava.net/java-se/file-io/how-to-read-and-write-binary-files-in-java
 	
 	public String toString()
-	{
-		
+	{	
 		try (
 				InputStream binaryStream = new FileInputStream("/Users/ava/eclipse-workspace/Alex's LZW/Advanced-Topics-LZW-main/Advanced-Topics-LZW/compressedFile.bin");				
 	        ) {
@@ -156,18 +154,18 @@ public class LZW {
 	            byte[] buffer = new byte[BUFFER_SIZE];
 	 
 	            while (binaryStream.read(buffer) != -1) {
-	                binaryString.write(buffer);
+	            	binaryString.write(buffer);
 	                
-	            return binaryString;//
+	            //return buildingBinary;
 	            }
 	 
 	        } catch (IOException ex) {
-	        	return EMPTY_BYTE_ARRAY;
+	        	//return EMPTY_BYTE_ARRAY;
 	        }
 		
 	}
 	
-	public int [] makeDecimalArray ()
+	public void makeDecimalArray ()
 	{
 		decimalArray = new int [binaryString.length()/9];
 		
@@ -176,8 +174,6 @@ public class LZW {
 			String binSubString = binaryString.substring(i, i+9)
 			decimalArray[i/9] = Integer.parseInt(binSubString,2);
 		}
-		
-		return decimalArray[];
 	}
 	
 	public void buildDictionary()//changes decodeDict and decodedString
@@ -199,7 +195,6 @@ public class LZW {
 			
 			decodedString += current;
 		}
-		
 	}
 	
 	
