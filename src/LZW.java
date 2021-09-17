@@ -123,10 +123,11 @@ public class LZW {
 	    return l_raw;
 	  }
 	
-	private static final int BUFFER_SIZE = 8;
-	private static String binaryString = "";
-	public static int[] decimalArray;
-
+	public static final int BUFFER_SIZE = 8;//number of bits placed at a time into binaryString
+	public String binaryString = "";//String of 1s and 0s
+	public int[] decimalArray;//array of decimals corresponding to each symbol, or 9 bits
+	public Map <Integer, String> decodeDict = new HashMap<Integer,String>(); //same as dict but with decimal Integer as key and String as value.
+	public String decodedString = "";//final original String
 	
 	public static void decompress () throws IOException
 	{
@@ -134,16 +135,17 @@ public class LZW {
 		
 		//XFor every 9 bits, add its corresponding decimal to an array
 		
-		//build dictionary using array of ints
+		//build dictionary using all ascii vals
+		
+		//add to dict using array of ints
 		
 		//use decimal array and dictionary to build string
-		//digit = parseInt(binary, 2)
 	}
 	
 	//takes in binary file and returns String of 0's and 1's.
 	//taken from https://www.codejava.net/java-se/file-io/how-to-read-and-write-binary-files-in-java
 	
-	public static String toString()
+	public String toString()
 	{
 		
 		try (
@@ -165,7 +167,7 @@ public class LZW {
 		
 	}
 	
-	public static int [] makeDecimalArray ()
+	public int [] makeDecimalArray ()
 	{
 		decimalArray = new int [binaryString.length()/9];
 		
@@ -178,7 +180,52 @@ public class LZW {
 		return decimalArray[];
 	}
 	
-	public static HashMap buildDictionary()
+	public void buildDictionary()//changes decodeDict and decodedString
+	{
+		for (int j = 0; j < 256; j++)
+		{
+			dict.put(j, "" + (char)j);
+		}
+		
+		String current = ""+ decodeDict.get(decimalArray[0]);
+		
+		for (int i = 1; i < decimalArray[].length; i++)
+		{
+			String next = ""+decodeDict.get(decimalArray[i]);
+			String firstNextChar = ""+next.charAt(0);
+			String cAndF = current + firstNextChar;
+			
+			decodeDict.put(255+i, cAndF);
+			
+			decodedString += current;
+		}
+		
+		String current = ""+ (char)br.read();
+		//asciiVal is used to store the ascii value of the variable "current"
+		int asciiVal;
+		//binaryString is a concatentation of all the different asciiVal values in the while loop. The string contains only 1's and 0's
+		String binaryString = "";
+		//the mark() and reset() methods are used to make sure no characters are skipped in the buffered stream. This all works so no need to worry about it.
+		
+		while (br.read() != -1)//checks that the input file still has things to read
+		{
+			br.reset();
+			String next = "" + (char)br.read();
+			if (dict.containsKey(current+next))
+			{
+				current = current + next;
+			}
+			else
+			{
+				asciiVal = dict.get(current);
+				binaryString += LZW.toBinary(asciiVal, 8);//toBinary(int number, int length) number is turned into a string of 1's and 0's. length is length of binary string made by this method
+				dict.put (current+next,dictLength);//not dictLength+1 because dictLength is always one value greater than dictionary index.
+				current = next;
+				dictLength++;
+			}
+			br.mark(100);
+		}
+	}
 	
 	
 	
