@@ -200,31 +200,6 @@ public class LZW {
 			decodedString += current;
 		}
 		
-		String current = ""+ (char)br.read();
-		//asciiVal is used to store the ascii value of the variable "current"
-		int asciiVal;
-		//binaryString is a concatentation of all the different asciiVal values in the while loop. The string contains only 1's and 0's
-		String binaryString = "";
-		//the mark() and reset() methods are used to make sure no characters are skipped in the buffered stream. This all works so no need to worry about it.
-		
-		while (br.read() != -1)//checks that the input file still has things to read
-		{
-			br.reset();
-			String next = "" + (char)br.read();
-			if (dict.containsKey(current+next))
-			{
-				current = current + next;
-			}
-			else
-			{
-				asciiVal = dict.get(current);
-				binaryString += LZW.toBinary(asciiVal, 8);//toBinary(int number, int length) number is turned into a string of 1's and 0's. length is length of binary string made by this method
-				dict.put (current+next,dictLength);//not dictLength+1 because dictLength is always one value greater than dictionary index.
-				current = next;
-				dictLength++;
-			}
-			br.mark(100);
-		}
 	}
 	
 	
