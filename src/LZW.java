@@ -204,6 +204,7 @@ public class LZW {
 		File f = new File ("/Users/ava/eclipse-workspace/Alex's LZW/Advanced-Topics-LZW-main/Advanced-Topics-LZW/lzw-file1.txt");
 		LZW l = new LZW(f);
 		l.compress();
+		l.decompress();
 		
 	}
 }
