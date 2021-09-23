@@ -186,17 +186,18 @@ public class LZW {
 			decodeDict.put(j, "" + (char)j);
 		}
 		
-		String current = ""+ decodeDict.get(decimalArray[0]);
-		
-		for (int i = 1; i < decimalArray.length; i++)
-		{
-			String next = ""+decodeDict.get(decimalArray[i]);
-			String firstNextChar = ""+next.charAt(0);
-			String cAndF = current + firstNextChar;
-			
-			decodeDict.put(255+i, cAndF);
-			
-			decodedString += current;
+		if (decimalArray.length != 0){
+			String current = ""+ decodeDict.get(decimalArray[0]);
+			for (int i = 1; i < decimalArray.length; i++)
+			{
+				String next = ""+decodeDict.get(decimalArray[i]);
+				String firstNextChar = ""+next.charAt(0);
+				String cAndF = current + firstNextChar;
+				
+				decodeDict.put(255+i, cAndF);
+				
+				decodedString += current;
+			}
 		}
 	}
 	
