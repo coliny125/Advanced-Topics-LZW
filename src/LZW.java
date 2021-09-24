@@ -141,7 +141,7 @@ public class LZW {
 		
 		//writing decodedString to .txt file
 		try (PrintWriter out = new PrintWriter("decompressedFile.txt")) {
-		    //out.println(text);
+		    out.println(decodedString);
 		}
 	}
 	
@@ -151,7 +151,7 @@ public class LZW {
 	public static String output()
 	{
 		try (
-				InputStream binaryStream = new FileInputStream("/Users/ava/eclipse-workspace/Alex's LZW/Advanced-Topics-LZW-main/Advanced-Topics-LZW/compressedFile.bin");				
+				InputStream binaryStream = new FileInputStream("/Users/apple/eclipse-workspace/Advanced-Topics-LZW/compressedFile.bin");				
 	        ) {
 	            byte[] buffer = new byte[BUFFER_SIZE];
 	 
@@ -195,7 +195,6 @@ public class LZW {
 				String cAndF = current + firstNextChar;
 				
 				decodeDict.put(255+i, cAndF);
-				
 				decodedString += current;
 			}
 		}
@@ -203,11 +202,14 @@ public class LZW {
 	
 	public static void main (String [] args) throws IOException
 	{
-		File f = new File ("/Users/apple/eclipse-workspace/Advanced-Topics-LZW/lzw-file1.txt");
+		File f = new File ("/Users/apple/eclipse-workspace/Advanced-Topics-LZW/lzw-file3.txt");
 		LZW l = new LZW(f);
+		long start = System.currentTimeMillis();
 		System.out.println(System.currentTimeMillis()); 
 		l.compress();
+		long end = System.currentTimeMillis();
 		System.out.println(System.currentTimeMillis()); 
+		System.out.println(end-start);
 		l.decompress();
 		
 	}
